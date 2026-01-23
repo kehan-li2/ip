@@ -10,14 +10,23 @@ public class Yuzu {
 //        System.out.println("Hello from\n" + logo);
 
         String msg = "Hello! I'm Yuzu\n" +
-                "What can I do for you?";
+                "What can I do for you?\n" +
+                "-------------------------------------";
         System.out.println(msg);
 
         // Read in user input and say goodbye
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("q")) {
-            System.out.println("Bye. Hope to see you again soon!");
+
+        // Read in until bye
+        while (true) {
+            String input = scanner.nextLine();
+
+            if (input.equals("bye")) {
+                System.out.println("-------------------------------------\n" + "Bye. Hope to see you again soon!" + "\n-------------------------------------");
+                break;
+            }
+            // Echo
+            System.out.println("-------------------------------------\n" + input + "\n-------------------------------------");
         }
 
         scanner.close();
