@@ -16,6 +16,8 @@ public class Yuzu {
 
         // Read in user input and say goodbye
         Scanner scanner = new Scanner(System.in);
+        String[] tasks = new String[100];
+        int count = 0;
 
         // Read in until bye
         while (true) {
@@ -25,8 +27,19 @@ public class Yuzu {
                 System.out.println("-------------------------------------\n" + "Bye. Hope to see you again soon!" + "\n-------------------------------------");
                 break;
             }
-            // Echo
-            System.out.println("-------------------------------------\n" + input + "\n-------------------------------------");
+
+            if (input.equals("list")) {
+                System.out.println("-------------------------------------");
+                for (int i = 0; i < count; i++) {
+                    System.out.println((i + 1) + ". " + tasks[i]);
+                }
+                System.out.println("-------------------------------------");
+                continue;
+            }
+
+            tasks[count]= input;
+            count++;
+            System.out.println("-------------------------------------\nadded: " + input + "\n-------------------------------------");
         }
 
         scanner.close();
