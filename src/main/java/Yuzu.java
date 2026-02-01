@@ -1,14 +1,46 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Yuzu {
+    // Keep the data folder under ip dir
+    private static final String FOLDER_PATH = "../../../data";
+    private static final String FILE_PATH = FOLDER_PATH + "/yuzu.txt";
+
+    // Handle the file is not exist
+    public static void initData() {
+        try {
+            File folder = new File(FOLDER_PATH);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Initialize storage failed: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
-        String msg = "Hello! I'm Yuzu\nWhat can I do for you?\n-------------------------------------";
-        System.out.println(msg);
+        initData();
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+        loadTasks(tasks);
         int count = 0;
+
+        String msg = "Hello! I'm Yuzu\nWhat can I do for you?\n-------------------------------------";
+        System.out.println(msg);
 
         while (true) {
             String input = scanner.nextLine();
@@ -62,7 +94,17 @@ public class Yuzu {
                             throw new Exception("The description of a deadline cannot be empty.");
                         }
                         String[] parts = input.substring(8).split(" /by ");
-                        newTask = new Deadline(parts[0], parts[1]);
+                        newTask = new Deadline(parts[0].trim(), parts[1].trim());
+                    } else if (input.startsWith("due on")) {
+                        String searchDate = input.substring(7).trim();
+                        LocalDateTime target = LocalDateTime.parse(searchDate, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                        for (Task t : tasks) {
+                            if (t instanceof Deadline due) {
+                                if (due.getDueDate().equals(target)) {
+                                    System.out.println(due);
+                                }
+                            }
+                        }
                     } else if (input.startsWith("event")) {
                         if (input.trim().equals("event")) {
                             throw new Exception("The description of a event cannot be empty.");
@@ -90,5 +132,33 @@ public class Yuzu {
         }
 
         scanner.close();
+    }
+
+    // If the file exists, load data from it
+    private static void loadTasks(ArrayList<Task> tasks) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
+            for (String line : lines) {
+                String[] parts = line.split(" \\| ");
+                Task task = null;
+                switch (parts[0]) {
+                    case "T":
+                        task = new ToDo(parts[2]);
+                        break;
+                    case "D":
+                        task = new Deadline(parts[2], parts[3]);
+                        break;
+                    case "E":
+                        task = new Event(parts[2], parts[3], parts[3]);
+                        break;
+                }
+                if (task != null) {
+                    if (parts[1].equals("1")) task.markDone();
+                    tasks.add(task);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading tasks.");
+        }
     }
 }
