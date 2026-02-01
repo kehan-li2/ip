@@ -1,13 +1,18 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 class Deadline extends Task {
-    protected LocalDate due;
+    private LocalDateTime due;
+    private static final DateTimeFormatter INPUT = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     public Deadline(String description, String due) {
         super(description);
-        this.due = LocalDate.parse(due);
+        this.due = LocalDateTime.parse(due, INPUT);
+    }
+
+    public LocalDateTime getDueDate() {
+        return this.due;
     }
 
     @Override

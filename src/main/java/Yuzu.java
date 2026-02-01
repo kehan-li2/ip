@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Yuzu {
     // Keep the data folder under ip dir
@@ -93,6 +95,16 @@ public class Yuzu {
                         }
                         String[] parts = input.substring(8).split(" /by ");
                         newTask = new Deadline(parts[0].trim(), parts[1].trim());
+                    } else if (input.startsWith("due on")) {
+                        String searchDate = input.substring(7).trim();
+                        LocalDateTime target = LocalDateTime.parse(searchDate, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                        for (Task t : tasks) {
+                            if (t instanceof Deadline due) {
+                                if (due.getDueDate().equals(target)) {
+                                    System.out.println(due);
+                                }
+                            }
+                        }
                     } else if (input.startsWith("event")) {
                         if (input.trim().equals("event")) {
                             throw new Exception("The description of a event cannot be empty.");
