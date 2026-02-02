@@ -1,4 +1,6 @@
-class Deadline extends Task {
+package yuzu.task;
+
+public class Deadline extends Task {
     protected String due;
 
     public Deadline(String description, String due) {
@@ -9,5 +11,9 @@ class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by " + due+ ")";
+    }
+
+    public String getDueDate() {
+        return this.due;
     }
 }

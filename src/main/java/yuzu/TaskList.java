@@ -1,3 +1,6 @@
+package yuzu;
+import yuzu.task.Task;
+
 import java.util.ArrayList;
 
 public class TaskList {
