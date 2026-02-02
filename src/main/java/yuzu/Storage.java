@@ -9,15 +9,31 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handle to load and save task data to file.
+ * It ensures the directories and files exist before performing I/O operations.
+ */
 public class Storage {
     private final String filePath;
     private final String folderPath;
 
+    /**
+     * Initializes a Storage object with a specified file path.
+     *
+     * @param filePath The relative or absolute path to the data file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         this.folderPath = filePath.substring(0, filePath.lastIndexOf("/"));
     }
 
+    /**
+     * Loads tasks from the local file.
+     * Creates the folder and file if do not exist.
+     *
+     * @return An ArrayList of tasks loaded from the file.
+     * @throws IOException If an error occurs during file creation or reading.
+     */
     public ArrayList<Task> load() throws IOException {
         File folder = new File(folderPath);
         if (!folder.exists()) {
@@ -54,6 +70,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the list of tasks to the storage file.
+     *
+     * @param tasks The TaskList containing tasks to be saved.
+     */
     public void save(TaskList tasks) {
         try (FileWriter fw = new FileWriter(filePath)) {
             for (int i = 0; i < tasks.size(); i++) {

@@ -2,7 +2,18 @@ package yuzu;
 import yuzu.command.*;
 import yuzu.task.*;
 
+/**
+ * Deals with all the user input string command.
+ * It interprets the input string and returns the corresponding Command object for execution.
+ */
 public class Parser {
+    /**
+     * Parses the user input into a specific Command object.
+     *
+     * @param input The string of input typed by user.
+     * @return A Command object.
+     * @throws Exception If the input format is invalid or the command is unrecognized.
+     */
     public static Command parse(String input) throws Exception {
         if (input.equals("bye")) {
             return new ExitCommand();

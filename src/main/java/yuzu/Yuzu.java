@@ -4,6 +4,10 @@ import yuzu.command.Command;
 import yuzu.ui.Ui;
 import yuzu.task.*;
 
+/**
+ * The entry point for this Yuzu bot.
+ * Coordinates the interaction between the UI, storage, command and tasks.
+ */
 public class Yuzu {
     private Storage storage;
     private TaskList tasks;
@@ -12,6 +16,11 @@ public class Yuzu {
     private static final String FOLDER_PATH = "data";
     private static final String FILE_PATH = FOLDER_PATH + "/yuzu.txt";
 
+    /**
+     * Initializes a new Yuzu application instance with the specified file path for storage.
+     *
+     * @param filePath The path to the file where the task data is stored.
+     */
     public Yuzu(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -24,6 +33,9 @@ public class Yuzu {
         }
     }
 
+    /**
+     * Starts the main application loop, reading user commands and executing them until exit.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -45,6 +57,11 @@ public class Yuzu {
         }
     }
 
+    /**
+     * The main entry point of the application.
+     *
+     * @param args The command line arguments (not used).
+     */
     public static void main(String[] args) {
         new Yuzu(FILE_PATH).run();
     }
