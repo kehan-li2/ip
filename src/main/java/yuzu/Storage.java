@@ -36,15 +36,15 @@ public class Storage {
             String[] parts = line.split(" \\| ");
             Task task = null;
             switch (parts[0]) {
-                case "T":
-                    task = new ToDo(parts[2]);
-                    break;
-                case "D":
-                    task = new Deadline(parts[2], parts[3]);
-                    break;
-                case "E":
-                    task = new Event(parts[2], parts[3], parts[3]);
-                    break;
+            case "T":
+                task = new ToDo(parts[2]);
+                break;
+            case "D":
+                task = new Deadline(parts[2], parts[3]);
+                break;
+            case "E":
+                task = new Event(parts[2], parts[3], parts[3]);
+                break;
             }
             if (task != null) {
                 if (parts[1].equals("1")) task.markDone();
