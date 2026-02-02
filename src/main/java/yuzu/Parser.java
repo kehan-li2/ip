@@ -40,7 +40,12 @@ public class Parser {
             String[] parts = input.substring(5).split(" /from ");
             String[] timeParts = parts[1].split(" /to ");
             return new AddCommand(new Event(parts[0], timeParts[0], timeParts[1]));
-        } else {
+        } else if (input.startsWith("find")) {
+            if (input.trim().equals("find")) {
+                throw new Exception("The keyword for find cannot be empty.");
+            }
+            return new FindCommand(input.substring(5).trim());
+    }else {
             throw new Exception("I'm sorry, but I don't know what that means :-(\n");
         }
     }
