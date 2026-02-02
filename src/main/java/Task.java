@@ -1,6 +1,6 @@
 public class Task {
-    private String description;
-    private boolean isDone;
+    protected String description;
+    protected boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -25,5 +25,9 @@ public class Task {
 
     public String toString() {
         return "[" + (isDone ? "X" : " ") + "] " + description;
+    }
+
+    public String toFileFormat() {
+        return (isDone ? "1" : "0") + " | " + description;
     }
 }
