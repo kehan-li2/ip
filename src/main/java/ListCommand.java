@@ -1,0 +1,13 @@
+public class ListCommand extends Command {
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        ui.showMessage("Here are the tasks in your list:");
+        if (tasks.size() > 0) {
+            for (int i = 0; i < tasks.size(); i++) {
+                ui.showMessage((i + 1) + "." + tasks.get(i));
+            }
+        } else {
+            ui.showMessage("There is no tasks in the list yet");
+        }
+    }
+}
