@@ -1,3 +1,9 @@
+package yuzu.command;
+import yuzu.Storage;
+import yuzu.task.*;
+import yuzu.TaskList;
+import yuzu.ui.Ui;
+
 public class MarkCommand extends Command {
     private int index;
 
