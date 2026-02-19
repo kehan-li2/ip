@@ -20,10 +20,18 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showMessage("Here are the tasks in your list:");
-        if (tasks.size() > 0) {
-            for (int i = 0; i < tasks.size(); i++) {
-                ui.showMessage((i + 1) + "." + tasks.get(i));
+        assert tasks != null : "TaskList should not be null during execution";
+        assert ui != null : "UI should not be null during execution";
+
+        ui.showMessage("Here is the list of your tasks:");
+        int listSize = tasks.size();
+        assert listSize >= 0 : "TaskList size cannot lesser than 0";
+
+        if (listSize > 0) {
+            for (int i = 0; i < listSize; i++) {
+                Task currentTask = tasks.get(i);
+                assert currentTask != null : "Get task at index " + i + " should not be null";
+                ui.showMessage((i + 1) + "." + currentTask);
             }
         } else {
             ui.showMessage("There is no tasks in the list yet");
