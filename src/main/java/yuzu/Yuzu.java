@@ -59,6 +59,8 @@ public class Yuzu {
 
     /**
      * Get a response for user's message
+     *
+     * @param input the user input.
      */
     public String getResponse(String input) {
         return "Yuzu heard: " + input;
