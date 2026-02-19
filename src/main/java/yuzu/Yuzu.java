@@ -58,6 +58,13 @@ public class Yuzu {
     }
 
     /**
+     * Get a response for user's message
+     */
+    public String getResponse(String input) {
+        return "Yuzu heard: " + input;
+    }
+
+    /**
      * The main entry point of the application.
      *
      * @param args The command line arguments (not used).
