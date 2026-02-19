@@ -1,5 +1,7 @@
 package yuzu.task;
 
+import java.time.LocalDate;
+
 /**
  * The general task for Yuzu bot.
  * A Task consists of description and completion status.
@@ -7,6 +9,7 @@ package yuzu.task;
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected LocalDate date;
 
     /**
      * Initializes a new Task with the specified description.
@@ -67,5 +70,15 @@ public class Task {
      */
     public String toFileFormat() {
         return (isDone ? "1" : "0") + " | " + description;
+    }
+
+    /**
+     * Updates the date of the task. Used for the BCD-EXtension B-snooze functionality.
+     * * @param newDate The new LocalDate for the task.
+     */
+    public void setDate(LocalDate newDate) {
+        // Assert that the new date is not in the past to ensure data quality
+        assert newDate != null : "The new snooze date cannot be null";
+        this.date = newDate;
     }
 }

@@ -2,6 +2,8 @@ package yuzu;
 import yuzu.command.*;
 import yuzu.task.*;
 
+import java.time.LocalDate;
+
 /**
  * Deals with all the user input string command.
  * It interprets the input string and returns the corresponding Command object for execution.
@@ -56,8 +58,19 @@ public class Parser {
                 throw new Exception("The keyword for find cannot be empty.");
             }
             return new FindCommand(input.substring(5).trim());
-    }else {
-            throw new Exception("I'm sorry, but I don't know what that means :-(\n");
+        } else if (input.startsWith("snooze")) {
+            // Expected update date format: "snooze 2 /to 2026-03-12"
+            try {
+                String[] parts = input.substring(7).split(" /to ");
+                int index = Integer.parseInt(parts[0].trim()) - 1;
+                LocalDate newDate = LocalDate.parse(parts[1].trim());
+
+                return new SnoozeCommand(index, newDate);
+            } catch (Exception e) {
+                throw new Exception("Please use the format: snooze [index] /to [YYYY-MM-DD]");
+            }
+        } else {
+                throw new Exception("I'm sorry, but I don't know what that means :-(\n");
+            }
         }
-    }
 }
