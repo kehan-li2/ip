@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("yuzu.Yuzu")
+    mainClass.set("yuzu.Launcher")
 }
 
 shadowJar {
