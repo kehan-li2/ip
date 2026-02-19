@@ -19,6 +19,12 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Private constructor for DialogBox.
+     * Add in FXML layout, sets the controller, and initializes UI components.
+     * * @param text The message to be displayed in the dialog.
+     * @param img The profile image of the user.
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
