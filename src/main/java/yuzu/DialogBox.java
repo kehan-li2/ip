@@ -13,6 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * Represents a custom control to display a dialog box, which consists of an ImageView
+ * to represent the user's profile and a label contains the text from the user.
+ */
 public class DialogBox extends HBox {
     @FXML
     private Label dialog;
@@ -20,8 +24,8 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     /**
-     * Private constructor for DialogBox.
-     * Add in FXML layout, sets the controller, and initializes UI components.
+     * Initializes a new DialogBox with the specified text and image.
+     *
      * * @param text The message to be displayed in the dialog.
      * @param img The profile image of the user.
      */
@@ -49,13 +53,25 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Create the DialogBox for user.
+     * * @param text The user's input message.
+     * @param img The user's profile image.
+     * @return A DialogBox aligned to the right.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Create the DialogBox for Yuzu.
+     * * @param text Yuzu's response message.
+     * @param img Yuzu's profile image.
+     * @return A flipped DialogBox aligned to the left.
+     */
     public static DialogBox getYuzuDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
-        db.flip();
-        return db;
+        DialogBox dialogBox = new DialogBox(text, img);
+        dialogBox.flip();
+        return dialogBox;
     }
 }
