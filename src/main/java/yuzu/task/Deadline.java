@@ -10,9 +10,10 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     protected String due;
 
-    public Deadline(String description, String due) {
+    public Deadline(String description, String by) {
         super(description);
-        this.due = due;
+        this.due = by;
+        this.date = LocalDate.parse(by);
     }
 
     /**
@@ -29,7 +30,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + due + ")";
+        return "[D]" + super.toString() + " by " + due;
     }
 
     public String getDueDate() {

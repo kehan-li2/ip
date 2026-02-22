@@ -1,6 +1,5 @@
 package yuzu.command;
 import yuzu.Storage;
-import yuzu.task.*;
 import yuzu.TaskList;
 import yuzu.ui.Ui;
 
@@ -17,7 +16,7 @@ public abstract class Command {
      * @param storage The storage to load and save data.
      * @throws Exception If an error occurs during command execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws Exception;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws Exception;
 
     /**
      * Indicates whether should terminate the bot.

@@ -29,11 +29,17 @@ public class DeleteCommand extends Command {
      * @param storage The storage to save the updated task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Task removed = tasks.remove(index);
-        ui.showMessage("Noted. I've removed this task:");
-        ui.showMessage("  " + removed);
-        ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        // Add in assertions
+        assert tasks != null : "TaskList should not be null for delete";
+        assert index >= 0 && index < tasks.size() : "Index out of bounds";
+
+        Task removeTask = tasks.remove(index);
+        String response = "Noted. I've removed task:\n  " + removeTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
+
+        ui.showMessage(response);
         storage.save(tasks);
+        return response;
     }
 }

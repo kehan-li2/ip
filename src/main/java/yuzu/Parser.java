@@ -48,11 +48,26 @@ public class Parser {
             return new AddCommand(new Deadline(parts[0].trim(), parts[1].trim()));
         } else if (input.startsWith("event")) {
             if (input.trim().equals("event")) {
-                throw new Exception("The description of a event cannot be empty.");
+                throw new Exception("The description of an event cannot be empty.");
             }
-            String[] parts = input.substring(5).split(" /from ");
-            String[] timeParts = parts[1].split(" /to ");
-            return new AddCommand(new Event(parts[0], timeParts[0], timeParts[1]));
+
+            try {
+                String rest = input.substring(6).trim();
+                // Split /on, /from, /to
+                String[] parts = rest.split(" /on | /from | /to ");
+
+                if (parts.length < 4) {
+                    throw new Exception("Please use format: event [desc] /on [YYYY-MM-DD] /from [HH:mm] /to [HH:mm]");
+                }
+
+                String description = parts[0].trim();
+                String datePart = parts[1].trim();
+                String timeRange = parts[2].trim() + " to " + parts[3].trim();
+
+                return new AddCommand(new Event(description, datePart, timeRange));
+            } catch (Exception e) {
+                throw new Exception("Error parsing event. Ensure you have /on, /from and /to correctly.");
+            }
         } else if (input.startsWith("find")) {
             if (input.trim().equals("find")) {
                 throw new Exception("The keyword for find cannot be empty.");
@@ -69,6 +84,8 @@ public class Parser {
             } catch (Exception e) {
                 throw new Exception("Please use the format: snooze [index] /to [YYYY-MM-DD]");
             }
+        } else if (input.startsWith("help")) {
+            return new HelpCommand();
         } else {
                 throw new Exception("I'm sorry, but I don't know what that means :-(\n");
             }

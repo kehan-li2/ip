@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * It provides methods to manipulate and get tasks information from the list.
  */
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     /**
      * Initializes an empty task list.
@@ -53,6 +53,15 @@ public class TaskList {
      */
     public Task get(int index) {
         return tasks.get(index);
+    }
+
+    /**
+     * Get all the tasks in the list
+     *
+     * @return All the tasks in the list
+     */
+    public ArrayList<Task> getTasks() {
+        return tasks;
     }
 
     /**

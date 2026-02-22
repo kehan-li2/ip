@@ -29,10 +29,20 @@ public class UnmarkCommand extends Command {
      * @param storage The storage handler to save the updated task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Task task = tasks.get(index);
-        task.markUnDone();
-        ui.showMessage("OK, I've marked this task as not done yet:\n  " + task);
-        storage.save(tasks);
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null for unmark";
+        assert index >= 0 && index < tasks.size() : "Task index out of bounds";
+
+        try {
+            Task task = tasks.get(index);
+            task.markUnDone();
+
+            String response = "OK, I've marked this task as not done yet:\n  " + task;
+            ui.showMessage(response);
+            storage.save(tasks);
+            return response;
+        } catch (Exception e) {
+            return "Error: Could not unmark task. " + e.getMessage();
+        }
     }
 }

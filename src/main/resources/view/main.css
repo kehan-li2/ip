@@ -1,5 +1,8 @@
 .background {
-    -fx-background-color: #E3F2FD;
+    -fx-background-image: url("../images/background4.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 
 .scroll-pane {
@@ -7,7 +10,7 @@
 }
 
 .scroll-pane .viewport {
-    -fx-background-color: #E3F2FD;
+    -fx-background-color: transparent;
 }
 
 .button {
@@ -27,9 +30,27 @@
     -fx-border-radius: 5;
 }
 
-.label {
+.dialog-box {
     -fx-padding: 10;
-    -fx-background-color: white;
-    -fx-background-radius: 10;
-    -fx-text-fill: #333333;
+    -fx-margin: 0 0 15 0;
+}
+
+.label {
+    -fx-padding: 10 15 10 15;
+    -fx-background-radius: 15;
+    -fx-min-height: 40;
+}
+
+.user-label {
+    -fx-background-color: #D1FFD6;
+    -fx-background-radius: 15 15 0 15;
+}
+
+.yuzu-label {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 15 15 15 0;
+}
+
+.scroll-pane, .scroll-pane .viewport {
+    -fx-background-color: transparent;
 }

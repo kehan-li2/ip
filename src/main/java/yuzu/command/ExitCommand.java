@@ -17,8 +17,12 @@ public class ExitCommand extends Command {
      * @param storage The storage handler (not used in this command).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showMessage("Bye. Hope to see you again soon!");
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        assert ui != null : "UI cannot be null when exit";
+
+        String exitMsg = "Bye!";
+        ui.showMessage(exitMsg);
+        return exitMsg;
     }
 
     /**

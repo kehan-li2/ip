@@ -81,4 +81,13 @@ public class Task {
         assert newDate != null : "The new snooze date cannot be null";
         this.date = newDate;
     }
+
+    /**
+     * Used to get the task's date
+     *
+     * @return The task's date
+     */
+    public LocalDate getDate() {
+        return this.date;
+    }
 }

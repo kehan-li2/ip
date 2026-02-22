@@ -23,12 +23,6 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    /**
-     * Initializes a new DialogBox with the specified text and image.
-     *
-     * * @param text The message to be displayed in the dialog.
-     * @param img The profile image of the user.
-     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -41,37 +35,28 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        // for circle avatar
+        javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(30.0, 30.0, 30.0);
+        displayPicture.setClip(clip);
     }
 
-    /**
-     * flip the dialog box make ImageView at left
-     */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
-        setAlignment(Pos.TOP_LEFT);
+        setAlignment(Pos.BOTTOM_LEFT);
+        dialog.getStyleClass().add("yuzu-label");
     }
 
-    /**
-     * Create the DialogBox for user.
-     * * @param text The user's input message.
-     * @param img The user's profile image.
-     * @return A DialogBox aligned to the right.
-     */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        db.dialog.getStyleClass().add("user-label");
+        return db;
     }
 
-    /**
-     * Create the DialogBox for Yuzu.
-     * * @param text Yuzu's response message.
-     * @param img Yuzu's profile image.
-     * @return A flipped DialogBox aligned to the left.
-     */
     public static DialogBox getYuzuDialog(String text, Image img) {
-        DialogBox dialogBox = new DialogBox(text, img);
-        dialogBox.flip();
-        return dialogBox;
+        var db = new DialogBox(text, img);
+        db.flip();
+        return db;
     }
 }

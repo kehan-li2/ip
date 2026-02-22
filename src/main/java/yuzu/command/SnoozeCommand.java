@@ -5,6 +5,7 @@ import yuzu.task.*;
 import yuzu.TaskList;
 import yuzu.ui.Ui;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a command to snooze/postpone a task to a new date.
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class SnoozeCommand extends Command {
     private int index;
     private LocalDate newDate;
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy");
 
     public SnoozeCommand(int index, LocalDate newDate) {
         this.index = index;
@@ -19,25 +21,26 @@ public class SnoozeCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        assert tasks != null : "TaskList should not be null";
-        assert newDate != null : "Snooze date should not be null";
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null for snooze";
+        assert newDate != null : "Snooze date cannot be null";
 
         try {
             Task taskToSnooze = tasks.get(index);
 
             if (taskToSnooze instanceof ToDo) {
-                ui.showMessage("I can only snooze a Todo task with a deadline!");
-                return;
+                return "I can only snooze a Todo task with a date!";
             }
 
             taskToSnooze.setDate(newDate);
-            ui.showMessage("Ok! I have snoozed this task to " + newDate + ":");
-            ui.showMessage("  " + taskToSnooze);
-            storage.save(tasks);
+            String formattedDate = newDate.format(DATE_FORMAT);
+            String response = "Ok! I have snoozed this task to " + formattedDate + ":\n  " + taskToSnooze;
 
+            ui.showMessage(response);
+            storage.save(tasks);
+            return response;
         } catch (IndexOutOfBoundsException e) {
-            ui.showMessage("Oops! I couldn't find a task with this index number.");
+            return "Oops! I couldn't find a task with index number" + (index + 1) + ".";
         }
     }
 }

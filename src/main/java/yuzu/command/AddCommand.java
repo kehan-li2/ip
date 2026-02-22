@@ -29,10 +29,20 @@ public class AddCommand extends Command {
      * @param storage To save the updated task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        // Add in assertion
+        assert task != null : "Task to add cannot be null";
+
         tasks.add(task);
-        ui.showMessage("Got it. I've added this task:\n  " + task);
-        ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
-        storage.save(tasks);
+        String response = "Got it. I've added this task:\n  " + task
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
+
+        try {
+            ui.showMessage(response);
+            storage.save(tasks);
+        } catch (Exception e) {
+            return response + "Failed to save task.";
+        }
+        return response;
     }
 }

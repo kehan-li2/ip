@@ -34,6 +34,13 @@ public class Yuzu {
     }
 
     /**
+     * Overloaded constructor for GUI initialization.
+     */
+    public Yuzu() {
+        this(FILE_PATH);
+    }
+
+    /**
      * Starts the main application loop, reading user commands and executing them until exit.
      */
     public void run() {
@@ -61,9 +68,15 @@ public class Yuzu {
      * Get a response for user's message
      *
      * @param input the user input.
+     * @return The response after execute the command.
      */
     public String getResponse(String input) {
-        return "Yuzu heard: " + input;
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
     }
 
     /**

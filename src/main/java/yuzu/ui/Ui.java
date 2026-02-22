@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Ui {
     private final Scanner scanner;
     private static final String DIVIDER = "-------------------------------------";
+    private String lastMessage;
 
     /**
      * Initializes a new Ui object and sets up the scanner for user input.
@@ -56,5 +57,14 @@ public class Ui {
      */
     public void showMessage(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Get the last message displayed on the UI
+     *
+     * @return The string for the msg
+     */
+    public String getLastMessage() {
+        return this.lastMessage;
     }
 }

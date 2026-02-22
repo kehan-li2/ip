@@ -27,20 +27,32 @@ public class FindCommand extends Command {
      * @param tasks   The list of tasks.
      * @param ui      The user interface to display matching results.
      * @param storage The storage handler (not used in this command).
+     * @return A formatted string of matching tasks.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showMessage("Here are the matching tasks in your list:");
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null for search";
+        assert keyword != null : "Keyword cannot be null";
+
+        StringBuilder sb = new StringBuilder("Here are the found tasks in your list:\n");
         int count = 0;
+
         for (int i = 0; i < tasks.size(); i++) {
-            Task t = tasks.get(i);
-            if (t.getDescription().contains(keyword)) {
+            Task task = tasks.get(i);
+            if (task.getDescription().contains(keyword)) {
                 count++;
-                ui.showMessage(count + "." + t);
+                sb.append(count).append(".").append(task).append("\n");
             }
         }
+
+        String response;
         if (count == 0) {
-            ui.showMessage("No matching tasks found.");
+            response = "No matching tasks found for: \"" + keyword + "\"";
+        } else {
+            response = sb.toString().trim();
         }
+
+        ui.showMessage(response);
+        return response;
     }
 }
