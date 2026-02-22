@@ -1,14 +1,17 @@
 package yuzu;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
- *  MainWindow controller
+ * MainWindow controller for the Yuzu GUI.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -44,5 +47,12 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getYuzuDialog(response, yuzuImage)
         );
         userInput.clear();
+
+        // to exit the program
+        if (yuzu.shouldExit()) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 }

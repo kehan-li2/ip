@@ -12,6 +12,7 @@ public class Yuzu {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private boolean isExit = false;
 
     private static final String FOLDER_PATH = "data";
     private static final String FILE_PATH = FOLDER_PATH + "/yuzu.txt";
@@ -73,10 +74,19 @@ public class Yuzu {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            return c.execute(tasks, ui, storage);
+            String response = c.execute(tasks, ui, storage);
+            this.isExit = c.isExit();
+            return response;
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
+    }
+
+    /**
+     * @return Returns true if the last command is "bye".
+     */
+    public boolean shouldExit() {
+        return this.isExit;
     }
 
     /**
