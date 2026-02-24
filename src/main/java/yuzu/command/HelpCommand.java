@@ -9,6 +9,14 @@ import yuzu.ui.Ui;
  */
 public class HelpCommand extends Command {
 
+    /**
+     * Execute the help command, list all available commands to user
+     *
+     * @param tasks   The list of tasks
+     * @param ui      The UI to display the list
+     * @param storage The storage handler
+     * @return The list of commands in string
+     */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
         String helpMessage = "Here is the commands list:\n\n"
